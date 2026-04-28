@@ -1,0 +1,4 @@
+1,Juan,Martinez,PhD,Full-Time
+2,Laura,Sanchez,Master,Part-Time
+3,Andres,Gomez,PhD,Full-Time
+4,Camila,Ruiz,Bachelor,Part-Time
