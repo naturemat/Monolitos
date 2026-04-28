@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de Matriculación Universitaria — Arquitectura Monolítica por Capas">
+    <title>Sistema de Matriculación | Plataforma Universitaria</title>
+
+    <!-- Tailwind CSS v3 CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              roboto: ['Roboto', 'sans-serif'],
+            },
+            colors: {
+              pastel: {
+                pink:    '#f9cdd3',
+                blue:    '#c5d5f7',
+                green:   '#c8edca',
+                yellow:  '#fdecc8',
+                purple:  '#ddd0f5',
+                mint:    '#b8ebd8',
+                peach:   '#fcd5c0',
+                lavender:'#e8daf5',
+                sky:     '#bfe0f5',
+                rose:    '#f5cce8',
+              },
+              surface: {
+                50:  '#fafbfc',
+                100: '#f4f6f8',
+                200: '#eef1f5',
+                300: '#e2e6ec',
+              }
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Google Font: Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+</head>
+<body class="font-roboto bg-surface-50 text-gray-700 min-h-screen flex flex-col">
+
+    <!-- ═══ HEADER ═══ -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-surface-300 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+            <h1 class="text-xl font-bold tracking-tight text-gray-800">
+                Sistema de Matriculación
+            </h1>
+
+            <nav class="flex gap-1" id="main-nav">
+                <button class="nav-btn active" data-page="dashboard">
+                    Panel
+                </button>
+                <button class="nav-btn" data-page="students">
+                    Estudiantes
+                </button>
+                <button class="nav-btn" data-page="courses">
+                    Materias
+                </button>
+                <button class="nav-btn" data-page="professors">
+                    Profesores
+                </button>
+                <button class="nav-btn" data-page="enrollments">
+                    Matrículas
+                </button>
+                <button class="nav-btn" data-page="teaching">
+                    Asignaciones
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ═══ MAIN CONTENT ═══ -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+
+        <!-- ── Panel (Dashboard) ── -->
+        <section id="page-dashboard" class="page active">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Panel General</h2>
+                <p class="text-sm text-gray-500 mt-1">Resumen del sistema de matriculación universitaria</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+                <div class="stat-card bg-pastel-blue">
+                    <p class="text-3xl font-black text-gray-800" id="stat-students">—</p>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-600 mt-1">Estudiantes</p>
+                </div>
+                <div class="stat-card bg-pastel-green">
+                    <p class="text-3xl font-black text-gray-800" id="stat-courses">—</p>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-600 mt-1">Materias</p>
+                </div>
+                <div class="stat-card bg-pastel-yellow">
+                    <p class="text-3xl font-black text-gray-800" id="stat-professors">—</p>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-600 mt-1">Profesores</p>
+                </div>
+                <div class="stat-card bg-pastel-pink">
+                    <p class="text-3xl font-black text-gray-800" id="stat-enrollments">—</p>
+                    <p class="text-xs font-semibold uppercase tracking-wider text-gray-600 mt-1">Matrículas</p>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="text-lg font-bold text-gray-800">Matrículas Recientes</h3>
+            </div>
+            <div id="recent-enrollments">
+                <div class="flex justify-center py-10"><div class="spinner"></div></div>
+            </div>
+        </section>
+
+        <!-- ── Estudiantes ── -->
+        <section id="page-students" class="page">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Estudiantes</h2>
+                <p class="text-sm text-gray-500 mt-1">Todos los estudiantes registrados en el sistema</p>
+            </div>
+            <div id="students-content">
+                <div class="flex justify-center py-10"><div class="spinner"></div></div>
+            </div>
+        </section>
+
+        <!-- ── Materias (Courses) ── -->
+        <section id="page-courses" class="page">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Materias</h2>
+                <p class="text-sm text-gray-500 mt-1">Materias disponibles y sus ubicaciones</p>
+            </div>
+            <div class="flex gap-3 mb-6">
+                <input
+                    type="text"
+                    id="course-search"
+                    class="flex-1 max-w-md bg-white border border-surface-300 rounded-lg px-4 py-2.5 text-sm text-gray-700 placeholder-gray-400 outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 transition"
+                    placeholder="Buscar materias por nombre..."
+                    onkeydown="if(event.key==='Enter') searchCourses()"
+                >
+                <button onclick="searchCourses()" class="inline-flex items-center gap-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 font-semibold text-sm px-5 py-2.5 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    Buscar
+                </button>
+            </div>
+            <div id="courses-content">
+                <div class="flex justify-center py-10"><div class="spinner"></div></div>
+            </div>
+        </section>
+
+        <!-- ── Profesores ── -->
+        <section id="page-professors" class="page">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Profesores</h2>
+                <p class="text-sm text-gray-500 mt-1">Cuerpo docente y sus credenciales</p>
+            </div>
+            <div id="professors-content">
+                <div class="flex justify-center py-10"><div class="spinner"></div></div>
+            </div>
+        </section>
+
+        <!-- ── Matrículas (Enrollments) ── -->
+        <section id="page-enrollments" class="page">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Matrículas</h2>
+                <p class="text-sm text-gray-500 mt-1">Gestionar matrículas de estudiantes en materias</p>
+            </div>
+
+            <!-- Enrollment Form -->
+            <div class="bg-white border border-surface-300 rounded-2xl p-6 mb-6 shadow-sm">
+                <h3 class="text-base font-bold text-gray-800 mb-4">Crear Nueva Matrícula</h3>
+                <form onsubmit="submitEnrollment(event)" class="flex flex-wrap items-end gap-4">
+                    <div class="flex-1 min-w-[200px]">
+                        <label class="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1.5" for="enroll-student">Estudiante</label>
+                        <select id="enroll-student" class="w-full bg-surface-50 border border-surface-300 rounded-lg px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 transition" required>
+                            <option value="">— Cargando estudiantes... —</option>
+                        </select>
+                    </div>
+                    <div class="flex-1 min-w-[200px]">
+                        <label class="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1.5" for="enroll-course">Materia</label>
+                        <select id="enroll-course" class="w-full bg-surface-50 border border-surface-300 rounded-lg px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 transition" required>
+                            <option value="">— Cargando materias... —</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="enroll-submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold text-sm px-6 py-2.5 rounded-lg shadow-sm hover:shadow transition">
+                        Matricular
+                    </button>
+                </form>
+            </div>
+
+            <!-- Filter -->
+            <div class="flex gap-3 mb-6">
+                <input
+                    type="text"
+                    id="enrollment-filter"
+                    class="flex-1 max-w-md bg-white border border-surface-300 rounded-lg px-4 py-2.5 text-sm text-gray-700 placeholder-gray-400 outline-none focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 transition"
+                    placeholder="Filtrar por nombre de materia..."
+                    onkeydown="if(event.key==='Enter') filterEnrollments()"
+                >
+                <button onclick="filterEnrollments()" class="inline-flex items-center gap-2 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 font-semibold text-sm px-5 py-2.5 rounded-lg transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    Buscar
+                </button>
+            </div>
+
+            <div id="enrollments-content">
+                <div class="flex justify-center py-10"><div class="spinner"></div></div>
+            </div>
+        </section>
+
+        <!-- ── Asignaciones (Teaching) ── -->
+        <section id="page-teaching" class="page">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-800">Asignaciones Docentes</h2>
+                <p class="text-sm text-gray-500 mt-1">Asignación de profesores a materias</p>
+            </div>
+            <div id="teaching-content">
+                <div class="flex justify-center py-10"><div class="spinner"></div></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="text-center py-5 text-xs text-gray-400 border-t border-surface-300 mt-auto">
+        <strong class="text-gray-500">Sistema de Matriculación</strong> — Arquitectura Monolítica por Capas · Spring Boot 3.2 · UCE 2026
+    </footer>
+
+    <!-- Toast container -->
+    <div id="toast-container" class="fixed top-20 right-5 z-[9999] flex flex-col gap-2"></div>
+
+    <!-- Application Script -->
+    <script src="/js/app.js"></script>
+
+</body>
+</html>

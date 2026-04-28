@@ -1,0 +1,168 @@
+/* ============================================
+   ENROLLMENT SYSTEM — Minimal Custom Styles
+   (Tailwind handles most styling via CDN)
+   ============================================ */
+
+/* ---------- Page transitions ---------- */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+  animation: popIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ---------- Navigation buttons ---------- */
+.nav-btn {
+  background: transparent;
+  border: none;
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #6b7280;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.nav-btn:hover {
+  color: #374151;
+  background: #f3f4f6;
+}
+
+.nav-btn.active {
+  color: #4f46e5;
+  background: #eef2ff;
+  font-weight: 600;
+}
+
+/* ---------- Stat cards ---------- */
+.stat-card {
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 250ms ease;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.stat-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- Data cards (pop-in animation) ---------- */
+.data-card {
+  animation: cardPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes cardPop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Stagger cards */
+.data-card:nth-child(1)  { animation-delay: 0.02s; }
+.data-card:nth-child(2)  { animation-delay: 0.04s; }
+.data-card:nth-child(3)  { animation-delay: 0.06s; }
+.data-card:nth-child(4)  { animation-delay: 0.08s; }
+.data-card:nth-child(5)  { animation-delay: 0.10s; }
+.data-card:nth-child(6)  { animation-delay: 0.12s; }
+.data-card:nth-child(7)  { animation-delay: 0.14s; }
+.data-card:nth-child(8)  { animation-delay: 0.16s; }
+.data-card:nth-child(9)  { animation-delay: 0.18s; }
+.data-card:nth-child(10) { animation-delay: 0.20s; }
+
+/* ---------- Spinner ---------- */
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Toast notifications ---------- */
+.toast {
+  animation: toastPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.toast.hiding {
+  animation: toastOut 0.25s ease forwards;
+}
+
+@keyframes toastPop {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+
+@keyframes toastOut {
+  to {
+    opacity: 0;
+    transform: scale(0.9) translateX(30px);
+  }
+}
+
+/* ---------- Table row hover ---------- */
+.data-table tbody tr {
+  transition: background 150ms ease;
+}
+
+.data-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f9fafb;
+}
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* ---------- Responsive nav ---------- */
+@media (max-width: 768px) {
+  .nav-btn {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+  header .flex {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
