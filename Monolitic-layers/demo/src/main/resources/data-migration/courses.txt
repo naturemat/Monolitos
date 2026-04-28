@@ -1,10 +1,10 @@
-101,Programming I,A2
-102,Programming II,A3
-103,Databases,Lab1
-104,Algorithms,A1
-105,Web Development,Lab2
-106,AI Basics,A4
-107,Networks,Lab3
-108,Operating Systems,A5
-109,Security,Lab4
-110,Cloud Computing,A6
+1,Programming I,A2
+2,Programming II,A3
+3,Databases,Lab1
+4,Algorithms,A1
+5,Web Development,Lab2
+6,AI Basics,A4
+7,Networks,Lab3
+8,Operating Systems,A5
+9,Security,Lab4
+10,Cloud Computing,A6
